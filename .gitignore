@@ -209,3 +209,6 @@ app/incomplete_requests.db
 
 # A2A Inspector
 tools/a2a-inspector/
+
+# Internal design documents — not for public release
+docs/
