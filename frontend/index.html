@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Discovery Team — AI-Powered Research & Analysis</title>
+  <meta name="description" content="Multi-agent product discovery tool for solo PMs, consultants, and entrepreneurs. Research reports, interview transcripts, and strategic recommendations.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+  <!-- ── Header ──────────────────────────────────────────────────── -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-icon">◆</span>
+        <span class="logo-text">Product Discovery Team</span>
+      </div>
+      <p class="tagline">AI-powered research, transcription & strategic insights</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- ── Banners ────────────────────────────────────────────────── -->
+    <div id="banner-area" class="banner-area" hidden></div>
+
+    <!-- ── Form ──────────────────────────────────────────────────── -->
+    <form id="discovery-form" class="discovery-form" novalidate>
+
+      <!-- ── Card A: Online Research ─────────────────────────────── -->
+      <div class="card" id="card-a">
+        <label class="card-header">
+          <input type="checkbox" id="want_report" name="want_report" class="card-check">
+          <div class="card-header-text">
+            <span class="card-label">Request A</span>
+            <h2 class="card-title">Online Research</h2>
+            <p class="card-subtitle">Deep research on any topic — we search, synthesize, and write the report.</p>
+          </div>
+        </label>
+        <div class="card-body" id="card-a-body" hidden>
+          <div class="field-group">
+            <label for="topic" class="field-label">Research Topic <span class="required">*</span></label>
+            <textarea id="topic" name="topic" class="textarea" rows="5"
+              placeholder="What do you want researched? Be specific — e.g. 'AI code review tools for enterprise dev teams' rather than 'AI tools'. Include any specific angles, competitors, geographies, or timeframes that matter."></textarea>
+            <p class="field-error" id="topic-error" hidden></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── Card B: Interview Transcription ─────────────────────── -->
+      <div class="card" id="card-b">
+        <label class="card-header">
+          <input type="checkbox" id="want_transcript" name="want_transcript" class="card-check">
+          <div class="card-header-text">
+            <span class="card-label">Request B</span>
+            <h2 class="card-title">Interview Transcription</h2>
+            <p class="card-subtitle">Upload audio or text — we transcribe, structure, and extract insights.</p>
+          </div>
+        </label>
+        <div class="card-body" id="card-b-body" hidden>
+          <div class="field-group">
+            <label class="field-label">Upload File <span class="required">*</span></label>
+            <div class="upload-zone" id="upload-zone">
+              <input type="file" id="transcript_file" name="transcript_file"
+                accept=".mp3,.wav,.m4a,.txt" class="file-input" hidden>
+              <div class="upload-content" id="upload-content">
+                <span class="upload-icon">⬆</span>
+                <p class="upload-text">Drag & drop or <button type="button" class="upload-link" id="upload-btn">browse</button></p>
+                <p class="upload-hint">Audio (.mp3, .wav, .m4a) or text (.txt) — max 100 MB</p>
+              </div>
+              <div class="upload-file" id="upload-file" hidden>
+                <span class="file-icon">📄</span>
+                <span class="file-name" id="file-name"></span>
+                <span class="file-size" id="file-size"></span>
+                <button type="button" class="file-remove" id="file-remove" aria-label="Remove file">✕</button>
+              </div>
+            </div>
+            <p class="field-error" id="file-error" hidden></p>
+          </div>
+
+          <div class="field-group">
+            <label for="interview_purpose" class="field-label">Interview Purpose <span class="required">*</span></label>
+            <input type="text" id="interview_purpose" name="interview_purpose" class="text-input"
+              placeholder="e.g. 'Customer discovery interviews for our B2B SaaS pricing model'">
+            <p class="field-error" id="purpose-error" hidden></p>
+          </div>
+
+          <div class="field-group">
+            <label for="interview_background" class="field-label">Interview Background <span class="required">*</span></label>
+            <textarea id="interview_background" name="interview_background" class="textarea"
+              placeholder="Who was interviewed, what product or topic was discussed, and any relevant context that helps interpret the conversation…" rows="3"></textarea>
+            <p class="field-error" id="context-error" hidden></p>
+          </div>
+
+          <div class="field-row">
+            <div class="field-group half">
+              <label for="participant_count" class="field-label">Number of Speakers</label>
+              <input type="number" id="participant_count" name="participant_count" class="text-input small" min="1" max="20"
+                placeholder="e.g. 3">
+            </div>
+          </div>
+
+          <label class="inline-check mindmap-check">
+            <input type="checkbox" id="want_mindmap" name="want_mindmap" class="sub-check">
+            <span>Also generate a Miro mind map</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- ── Card C: Recommendation ──────────────────────────────── -->
+      <div class="card card-addon" id="card-c">
+        <label class="card-header">
+          <input type="checkbox" id="want_recommendation" name="want_recommendation" class="card-check" disabled>
+          <div class="card-header-text">
+            <span class="card-label">Opt-in</span>
+            <h2 class="card-title">Recommendation Brief</h2>
+            <p class="card-subtitle card-disabled-hint" id="rec-hint">Requires Report or Transcript</p>
+          </div>
+        </label>
+      </div>
+
+      <!-- ── Submit ──────────────────────────────────────────────── -->
+      <div class="submit-area">
+        <button type="submit" id="submit-btn" class="submit-btn" disabled>
+          <span class="btn-text">Submit Request</span>
+          <span class="btn-spinner" hidden></span>
+        </button>
+        <p class="submit-hint" id="submit-hint">Select Report or Transcript to continue.</p>
+      </div>
+    </form>
+
+    <!-- ── Clarification Area (HITL) ─────────────────────────────── -->
+    <div id="clarification-area" class="clarification-area" hidden></div>
+
+    <!-- ── Results View ──────────────────────────────────────────── -->
+    <section id="results-view" class="results-view" hidden>
+      <h2 class="results-title">Your Results</h2>
+      <div id="results-cards" class="results-cards"></div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <p>Product Discovery Team — built with Google ADK 2.0</p>
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
