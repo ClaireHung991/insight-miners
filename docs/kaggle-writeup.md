@@ -1,11 +1,11 @@
-# Product Discovery Team
+# Insight Miners
 ### A multi-agent AI system that automates the full product discovery cycle — from web research and interview transcription to strategic synthesis — replacing hours of manual work with a single form submission.
 
 ---
 
 ## 1. Overview
 
-Product Discovery Team is a multi-agent AI system built for solo product managers, consultants, and entrepreneurs who run discovery cycles without a research team. The user submits one form selecting any combination of three capabilities — online research, interview transcription, or a strategic recommendation brief — and receives polished, downloadable artifacts within minutes.
+Insight Miners is a multi-agent AI system built for solo product managers, consultants, and entrepreneurs who run discovery cycles without a research team. The user submits one form selecting any combination of three capabilities — online research, interview transcription, or a strategic recommendation brief — and receives polished, downloadable artifacts within minutes.
 
 The system coordinates a team of seven specialized agents: a research pipeline that searches the web and writes an edited report, an interview pipeline that transcribes audio, names speakers from context, and extracts a structured topic tree, and an advisor that synthesizes both streams into a ranked recommendation with an impact/effort matrix. An optional Miro mind map is generated automatically from the topic tree. Every artifact is delivered through a polling-based single-page web interface with no user interaction after submission.
 
@@ -241,7 +241,7 @@ The Advisor runs after whichever upstream pipelines are selected. It receives co
 
 ```bash
 git clone <repo>
-cd product-discovery-team
+cd insight-miners
 uv sync
 cp app/.env.example app/.env
 # Fill in GOOGLE_API_KEY, OPENAI_API_KEY, MIRO_ACCESS_TOKEN

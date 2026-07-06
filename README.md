@@ -1,4 +1,4 @@
-# Product Discovery Team
+# Insight Miners
 
 A multi-agent AI system that accelerates product discovery for solo product managers, consultants, and entrepreneurs. It does in minutes what typically takes hours: researches a topic from the web, transcribes and structures an interview recording, and optionally synthesizes both into a strategic recommendation brief.
 
@@ -31,7 +31,7 @@ A multi-agent AI system that accelerates product discovery for solo product mana
 
 Product discovery — the process of identifying what users need, what the market looks like, and what to build next — is slow, manual, and expensive.
 
-**Product Discovery Team** automates three core discovery activities through a coordinated team of AI agents:
+**Insight Miners** automates three core discovery activities through a coordinated team of AI agents:
 
 | Request | What it does |
 |---|---|
@@ -711,7 +711,7 @@ All pipeline stages use Python's standard `logging` module with consistent prefi
 ## 12. Repository Structure
 
 ```
-product-discovery-team/
+insight-miners/
 ├── app/                        # Python application package
 │   ├── agent.py                # ADK Workflow definition; pipeline functions
 │   ├── fast_api_app.py         # FastAPI server; HTTP endpoints; run store
@@ -807,7 +807,7 @@ sudo apt-get install ffmpeg
 ```bash
 # Clone the repository
 git clone <repo-url>
-cd product-discovery-team
+cd insight-miners
 
 # Install Python dependencies
 uv sync
@@ -865,14 +865,14 @@ uv run pytest tests/ -v
 
 ```bash
 # Build the image
-docker build -t product-discovery-team .
+docker build -t insight-miners .
 
 # Run with environment variables
 docker run -p 8080:8080 \
   -e GOOGLE_API_KEY=... \
   -e OPENAI_API_KEY=... \
   -e MIRO_ACCESS_TOKEN=... \
-  product-discovery-team
+  insight-miners
 ```
 
 The Docker image exposes port `8080`. The `frontend/` directory is **not** copied into the Docker image (see `Dockerfile` — only `app/` is copied). For production deployment with the frontend served by FastAPI, add `COPY ./frontend ./frontend` to the Dockerfile.
