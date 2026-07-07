@@ -43,7 +43,7 @@ The user selects any valid combination (A, B, A+B, A+C, B+C, A+B+C) through a si
 
 **Who it is for:** Solo product managers running customer discovery, consultants producing deliverables, and founders who need market research but cannot afford a research team.
 
-**What multi-agent provides:** Each activity is handled by a purpose-built agent with its own prompt, model assignment, and quality loop — so the system can run Research and Interview pipelines in parallel, retry a single failed stage without restarting everything, and keep each agent's context window small and focused.
+**What multi-agent provides:** Each activity is handled by a purpose-built agent with its own prompt, model assignment, and quality loop — so the system runs Research and Interview pipelines concurrently (via `asyncio.gather`), can retry a single failed stage without restarting everything, and keeps each agent's context window small and focused.
 
 ---
 
@@ -109,9 +109,9 @@ The research pipeline implements a Writer → Editor → Writer revision cycle (
 
 The Orchestrator builds scoped envelopes before dispatching to each pipeline. The Research pipeline receives only `{topic}`. The Interview pipeline receives `{file_path, interview_purpose, interview_background, speaker_info}`. No agent receives data it does not need. This is not just a security practice — it also reduces prompt noise and improves output quality.
 
-### Parallel execution (partially implemented)
+### Parallel execution
 
-When both A and B are selected, the current implementation runs them sequentially (`_run_both`). The architecture is designed to support concurrent execution since the pipelines write to separate keys in shared state (`artifacts.report` vs `artifacts.transcript`). This is a straightforward future improvement.
+When both A and B are selected, `_run_both` runs both pipelines concurrently using `asyncio.gather`. Since the pipelines write to independent state keys (`artifacts.report` vs `artifacts.transcript`) there are no shared-state conflicts. This roughly halves wall-clock time for A+B requests compared to running them sequentially.
 
 ### Debugging and observability
 
@@ -893,9 +893,6 @@ The Docker image exposes port `8080`. The `frontend/` directory is **not** copie
 
 Uploaded files in `app/_uploads/` are currently never deleted. A cleanup job (e.g., scheduled via APScheduler or a cron) should delete files older than a configurable TTL (e.g., 24 hours) after processing completes.
 
-### Parallel pipeline execution for A+B
-
-When both research and interview pipelines are selected, `_run_both` currently runs them sequentially (`await _research_pipeline`, then `await _interview_pipeline`). Since they write to separate state keys, they can run concurrently with `asyncio.gather`. This would reduce total wall-clock time for A+B requests roughly in half.
 
 ### Persistent result storage
 
