@@ -6,12 +6,12 @@ All notable changes to **Insight Miners** are documented here.
 
 ## [Unreleased]
 
-### Added
-- `.md` (Markdown) file support for interview transcript upload — frontend only change; backend already handled it via `transcriber.py`
-
 ---
 
 ## [2026-07-07]
+
+### Added
+- `.md` (Markdown) file support for interview transcript upload — frontend only change; backend already handled it via `transcriber.py`
 
 ### Changed
 - **Parallel pipeline execution** — when both Research (A) and Interview (B) are selected, pipelines now run concurrently via `asyncio.gather` instead of sequentially. Roughly halves wall-clock time for combined requests.
