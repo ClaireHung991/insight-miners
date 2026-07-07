@@ -261,9 +261,12 @@ async def _interview_pipeline(ctx: Context, node_input):
 
 
 async def _run_both(ctx: Context, node_input):
-    """When A+B selected, run both pipelines sequentially."""
-    await _research_pipeline(ctx, node_input)
-    await _interview_pipeline(ctx, node_input)
+    """When A+B selected, run both pipelines concurrently."""
+    import asyncio
+    await asyncio.gather(
+        _research_pipeline(ctx, node_input),
+        _interview_pipeline(ctx, node_input),
+    )
     return Event(output={"research": "complete", "interview": "complete"})
 
 
