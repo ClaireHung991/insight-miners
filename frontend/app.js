@@ -14,7 +14,7 @@
  */
 
 const MAX_FILE_SIZE = 100 * 1024 * 1024; // 100 MB
-const ACCEPTED_TYPES = new Set(['.mp3', '.wav', '.m4a', '.txt']);
+const ACCEPTED_TYPES = new Set(['.mp3', '.wav', '.m4a', '.txt', '.md']);
 const POLL_INTERVAL_MS = 2500;
 
 // ── DOM Refs ────────────────────────────────────────────────────────
